@@ -1,7 +1,6 @@
 import sys
 domino_dict = {}
-top_longer_dict = {}
-bottom_longer_dict = {}
+trailing_dict = {}
 open_queue = []
 visited = []
 max_states = 0
@@ -18,16 +17,16 @@ class Node:
 		top = self.strings[0]
 		bottom = self.strings[1]
 		if top.startswith(bottom):
-			trailing = top.replace(bottom,'',1)
-			if trailing not in top_longer_dict:
-				top_longer_dict[trailing] = 1
+			trailing = '+' + top.replace(bottom,'',1)
+			if trailing not in trailing_dict:
+				trailing_dict[trailing] = 1
 				return True 
 			else:
 				return False
 		elif bottom.startswith(top):
-			trailing = bottom.replace(top,'',1)
-			if trailing not in bottom_longer_dict:
-				bottom_longer_dict[trailing] = 1
+			trailing = '-' + bottom.replace(top,'',1)
+			if trailing not in trailing_dict:
+				trailing_dict[trailing] = 1
 				return True
 			else:
 				return False
