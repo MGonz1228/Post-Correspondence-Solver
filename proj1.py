@@ -121,7 +121,7 @@ def check_if_solution_exists(domino_dict):
 def main():
 	try:
 #		uncomment an input file to test
-#		input = open("input1.txt", "r")
+		input = open("input1.txt", "r")
 #		input = open("input2.txt", "r")
 #		input = open("input3.txt", "r")
 #		input = open("input4.txt", "r")
