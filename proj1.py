@@ -47,7 +47,7 @@ class Node:
 	def generate_child_nodes(self, flag):
 		visited.append(self)
 		if flag == 0:
-			print('popping: %s' % open_queue[0].strings)
+			print('dequeuing: %s' % open_queue[0].strings)
 			open_queue.pop(0)
 		elif flag == 1:
 			print('popping: %s' % open_queue[-1].strings)
@@ -64,10 +64,15 @@ class Node:
 				if new_node.is_goal_state():
 					exit_function(1, new_node,1, print_sequence_flag)
 				if len(open_queue) < max_queue_length:
-					print('appending: %s' % new_node.strings)
-					open_queue.append(new_node)
-					if len(open_queue) == max_queue_length:
-						print('open_queue has reached its maximum. we must now begin depth-first.')
+					if flag == 0:
+						print('appending: %s' % new_node.strings)
+						open_queue.append(new_node)
+
+						if len(open_queue) == max_queue_length:
+							print('open_queue has reached its maximum. we must now begin depth-first.')
+					elif flag == 1:
+						print('prepending: %s' % new_node.strings)
+						open_queue.insert(0,new_node)
 	def print_solution_sequence(self):
 		sequence = []
 		while self.parent:
@@ -80,16 +85,16 @@ def graph_search(self):
 	states=0
 	while states < max_states and goal_state_found == False and len(open_queue) < max_queue_length:
 		if open_queue == []:
-			exit_function(0,'',1)
+			exit_function(0,None,0,0)
 		open_queue[0].generate_child_nodes(0)
 		states+=1
 	# Begin DFS
 	while states < max_states and goal_state_found == False:
 		if open_queue == []:
-			exit_function(0,'',1)
-		for node in open_queue:
-			node.generate_child_nodes(1)
-			states+=1
+			exit_function(0,None,0,0)
+		open_queue[-1].generate_child_nodes(1)
+		states+=1
+	exit_function(0,None,1,0)
 
 def initialize_graph():
 	initial_state = Node(['',''])
@@ -109,19 +114,10 @@ def exit_function(solutionFound, Node, solutionExists, printSequence):
 
 	sys.exit()
 
-def check_if_solution_exists(domino_dict):
-	top_items = []
-	bottom_items = []
-	for key in domino_dict:
-		top_items.append(domino_dict[key][0])
-		bottom_items.append(domino_dict[key][1])
-	if top_items[0] == bottom_items[1] and top_items[1] == bottom_items[0]:
-		exit_function(0,'',0, 0)
-		
 def main():
 	try:
 #		uncomment an input file to test
-		input = open("input1.txt", "r")
+#		input = open("input1.txt", "r")
 #		input = open("input2.txt", "r")
 #		input = open("input3.txt", "r")
 #		input = open("input4.txt", "r")
@@ -152,7 +148,7 @@ def main():
 		bottom_string = domino.split()[2]
 		domino_dict[index] = [top_string, bottom_string]	
 
-	check_if_solution_exists(domino_dict)
+#	check_if_solution_exists(domino_dict)
 	initialize_graph()
 
 if __name__ == '__main__':
