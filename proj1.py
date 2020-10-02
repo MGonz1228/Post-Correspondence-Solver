@@ -50,8 +50,8 @@ class Node:
 			print('dequeuing: %s' % open_queue[0].strings)
 			open_queue.pop(0)
 		elif flag == 1:
-			print('popping: %s' % open_queue[-1].strings)
-			open_queue.pop()
+			print('popping: %s' % open_queue[0].strings)
+			open_queue.pop(0)
 		for index in domino_dict.keys():
 			current_strings = self.strings
 			first_string = domino_dict[index][0]
@@ -92,7 +92,7 @@ def graph_search(self):
 	while states < max_states and goal_state_found == False:
 		if open_queue == []:
 			exit_function(0,None,0,0)
-		open_queue[-1].generate_child_nodes(1)
+		open_queue[0].generate_child_nodes(1)
 		states+=1
 	exit_function(0,None,1,0)
 
@@ -118,7 +118,7 @@ def main():
 	try:
 #		uncomment an input file to test
 #		input = open("input1.txt", "r")
-#		input = open("input2.txt", "r")
+		input = open("input2.txt", "r")
 #		input = open("input3.txt", "r")
 #		input = open("input4.txt", "r")
 #		input = open('knownInput.txt', 'r')
